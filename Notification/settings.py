@@ -37,6 +37,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework',
+    'Customer.apps.CustomerConfig',
+    'SMS.apps.SmsConfig',
+    'Promo_code.apps.PromoCodeConfig',
+
 ]
 
 MIDDLEWARE = [

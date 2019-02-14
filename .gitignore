@@ -6,3 +6,11 @@ env/
 db\.sqlite3
 
 Notification/__pycache__/
+
+SMS/__pycache__/
+
+Customer/__pycache__/
+
+Customer/migrations/__pycache__/
+
+SMS/migrations/__pycache__/
