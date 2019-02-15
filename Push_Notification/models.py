@@ -23,7 +23,7 @@ class Notification(models.Model):
 
 
 class NotificationTemplate(models.Model):
-    notification_tittle = models.TextField()
+    notification_title = models.TextField()
     notification_body = models.TextField()
     created_date = models.DateTimeField(auto_now_add=True)
     modified_date = models.DateTimeField(auto_now_add=True)
