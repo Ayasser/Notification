@@ -1,7 +1,6 @@
-from django.contrib.auth.models import User
 from django.db import models
-
-from Customer.models import Customer, language
+from django.contrib.auth.models import User
+from Customer.models import Customer, Language
 from Promo_code.models import PromoCode
 
 # Create your models here.
@@ -29,7 +28,7 @@ class SMSTemplate(models.Model):
     modified_date = models.DateTimeField(auto_now_add=True)
     created_by = models.ForeignKey(User, on_delete=models.CASCADE, related_name='+')
     modified_by = models.ForeignKey(User, on_delete=models.CASCADE, related_name='+')
-    language = models.ForeignKey(language,on_delete=models.CASCADE)
+    language = models.ForeignKey(Language,on_delete=models.CASCADE)
     sms = models.ForeignKey(SMS,on_delete=models.CASCADE)
 
     objects= models.Manager()

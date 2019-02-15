@@ -18,7 +18,7 @@ class City(models.Model):
         verbose_name_plural = 'cities'
         db_table = 'city'
 
-class language(models.Model):
+class Language(models.Model):
     language = models.CharField(max_length=255)
 
     objects= models.Manager()
@@ -37,7 +37,7 @@ class Customer(models.Model):
     phone_number = models.CharField(max_length=50)
     email = models.EmailField(max_length=254)
     city = models.ForeignKey(City,on_delete=models.CASCADE)
-    language = models.ForeignKey(language,on_delete=models.CASCADE)
+    language = models.ForeignKey(Language,on_delete=models.CASCADE)
     
     objects= models.Manager()
 
@@ -47,3 +47,17 @@ class Customer(models.Model):
     class Meta:
         verbose_name_plural = 'customers'
         db_table = 'customer'
+
+class CustomerDevices(models.Model):
+    customer = models.ForeignKey(Customer,on_delete=models.CASCADE)
+    device_id = models.CharField(max_length=200)
+    created_date = models.DateTimeField(auto_now_add=True)
+
+    objects= models.Manager()
+
+    def __str__(self):
+        return self.device_id
+
+    class Meta:
+        verbose_name_plural = 'customer_devices'
+        db_table = 'customer_device'

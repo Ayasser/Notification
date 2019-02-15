@@ -19,7 +19,7 @@ def sendSMS(request):
         if sms_id is None or customer_ids is None:
             return Response("ERORR", status=status.HTTP_404_NOT_FOUND)
         
-        sms = SMS.objects.filter(id=sms)
+        sms = SMS.objects.filter(id=sms_id)
         keys_dict = dict()
 
         if promo_code_id:

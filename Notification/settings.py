@@ -41,6 +41,8 @@ INSTALLED_APPS = [
     'Customer.apps.CustomerConfig',
     'SMS.apps.SmsConfig',
     'Promo_code.apps.PromoCodeConfig',
+    'Push_Notification.apps.PushNotificationConfig',
+
 
 ]
 
