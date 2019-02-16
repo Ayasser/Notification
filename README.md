@@ -2,7 +2,8 @@
 
 * Dynamic notifications and sms template.
 * User can create template and send it to user or group of users.
-
+* Temaplate example : " Hi [customer] , Thanks for registration."
+ [cutomer] will replace by each customer name. 
 
 
 ## Environment setup
