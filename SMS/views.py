@@ -5,10 +5,61 @@ from rest_framework.response import Response
 from Customer.models import Customer
 from Promo_code.models import PromoCode
 from .models import SMS, SMSTemplate, CustomerSMS
+from .serializers import SMSSerializer, SMSTemplateSerializer, \
+    CustomerSMSSerializer
+
 # Create your views here.
 
+class SMSViewSet(viewsets.ModelViewSet):
+    """
+    | Default CRUD view set for :py:class:`SMS<SMS.models.SMS>`.
+
+    * Supports Pagination: *No*
+    * Search Fields: **None**
+    * Ordering Fields: **None**
+    * Filter Fields: **None**
+    """
+    queryset = SMS.objects.all()
+    serializer_class= SMSSerializer
+
+
+class SMSTemplateViewSet(viewsets.ModelViewSet):
+    """
+    | Default CRUD view set for :py:class:`SMSTemplate<SMS.models.SMSTemplate>`.
+
+    * Supports Pagination: *No*
+    * Search Fields: **None**
+    * Ordering Fields: **None**
+    * Filter Fields: **None**
+    """
+    queryset = SMSTemplate.objects.all()
+    serializer_class= SMSTemplateSerializer
+
+
+class CustomerSMSViewSet(viewsets.ModelViewSet):
+    """
+    | Default CRUD view set for :py:class:`CustomerSMS<SMS.models.CustomerSMS>`.
+
+    * Supports Pagination: *No*
+    * Search Fields: **None**
+    * Ordering Fields: **None**
+    * Filter Fields: **None**
+    """
+    queryset = CustomerSMS.objects.all()
+    serializer_class= CustomerSMSSerializer
+
 @api_view(['GET'])
+
 def sendSMS(request):
+    """
+    | Send SMS using to one or group of customer.
+
+        parameters : 
+        -customer_ids: Customer
+        -notification_id : Notification
+        -promo_code_id : PromoCode
+    """
+    
     if request.method == 'GET':
         customer_ids = request.query_params.get('customer_ids')
         if customer_ids:

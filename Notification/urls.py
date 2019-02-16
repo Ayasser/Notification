@@ -15,12 +15,19 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from SMS.views import sendSMS
-from Push_Notification.views import sendNotification
-from django.conf.urls import url
+from django.conf.urls import url,include
+from rest_framework import routers
+from rest_framework_swagger.views import get_swagger_view
+from rest_framework.documentation import include_docs_urls
+
+schema_view = get_swagger_view(title='Notification API')
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    url(r'^sendsms/', sendSMS),
-    url(r'^sendnotification/', sendNotification),
+    url(r'^apidoc', schema_view),
+    url(r'^docs/', include_docs_urls(title='API Doc')),
+    url(r'', include(('Customer.urls','Customer'), namespace='Customer')),
+    url(r'', include(('Promo_code.urls','Promo_code'), namespace='Promo_code')),
+    url(r'', include(('Push_Notification.urls','Push_Notification'), namespace='Push_Notification')),
+    url(r'', include(('SMS.urls','SMS'), namespace='SMS')),
 ]

@@ -3,14 +3,64 @@ from django.shortcuts import render
 from rest_framework import status, viewsets
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
+from firebase_admin import messaging
+
 from Customer.models import Customer, CustomerDevices
 from Promo_code.models import PromoCode
 from .models import Notification, NotificationTemplate, CustomerNotification
-from firebase_admin import messaging
+from .serializers import NotificationSerializer, NotificationTemplateSerializer, \
+    CustomerNotificationSerializer
+
 # Create your views here.
+
+class NotificationViewSet(viewsets.ModelViewSet):
+    """
+    | Default CRUD view set for :py:class:`Notification<Push_Notification.models.Notification>`.
+
+    * Supports Pagination: *No*
+    * Search Fields: **None**
+    * Ordering Fields: **None**
+    * Filter Fields: **None**
+    """
+    queryset = Notification.objects.all()
+    serializer_class= NotificationSerializer
+
+
+class NotificationTemplateViewSet(viewsets.ModelViewSet):
+    """
+    | Default CRUD view set for :py:class:`NotificationTemplate<Push_Notification.models.NotificationTemplate>`.
+
+    * Supports Pagination: *No*
+    * Search Fields: **None**
+    * Ordering Fields: **None**
+    * Filter Fields: **None**
+    """
+    queryset = NotificationTemplate.objects.all()
+    serializer_class= NotificationTemplateSerializer
+
+
+class CustomerNotificationViewSet(viewsets.ModelViewSet):
+    """
+    | Default CRUD view set for :py:class:`CustomerNotification<Push_Notification.models.CustomerNotification>`.
+
+    * Supports Pagination: *No*
+    * Search Fields: **None**
+    * Ordering Fields: **None**
+    * Filter Fields: **None**
+    """
+    queryset = CustomerNotification.objects.all()
+    serializer_class= CustomerNotificationSerializer
 
 @api_view(['GET'])
 def sendNotification(request):
+    """
+    | Send Notification using Firebase to one or group of customer.
+
+        parameters : 
+        -customer_ids: Customer
+        -notification_id : Notification
+        -promo_code_id : PromoCode
+    """
     if request.method == 'GET':
         customer_ids = request.query_params.get('customer_ids')
         if customer_ids:

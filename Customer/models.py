@@ -4,7 +4,7 @@ from django.db import models
 
 class City(models.Model):
     """
-    Stores City, related to :py:class:`Country<MasterData.models.Country>`.
+    Stores City.
     """
     name_en = models.CharField(max_length=255)
     name_ar = models.CharField(max_length=255)
@@ -19,8 +19,10 @@ class City(models.Model):
         db_table = 'city'
 
 class Language(models.Model):
+    """
+    Stores Language.
+    """
     language = models.CharField(max_length=255)
-
     objects= models.Manager()
     
     def __str__(self):
@@ -31,6 +33,9 @@ class Language(models.Model):
         db_table = 'language'
 
 class Customer(models.Model):
+    """
+    Stores Customers, related to :py:class:`Language<Customer.models.Language>`.
+    """
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
     birth_date = models.DateField()
@@ -49,6 +54,9 @@ class Customer(models.Model):
         db_table = 'customer'
 
 class CustomerDevices(models.Model):
+    """
+    Stores Customer Devices id, related to :py:class:`Customer<Customer.models.Customer>`.
+    """
     customer = models.ForeignKey(Customer,on_delete=models.CASCADE)
     device_id = models.CharField(max_length=200)
     created_date = models.DateTimeField(auto_now_add=True)

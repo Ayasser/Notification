@@ -49,8 +49,7 @@ INSTALLED_APPS = [
     'SMS.apps.SmsConfig',
     'Promo_code.apps.PromoCodeConfig',
     'Push_Notification.apps.PushNotificationConfig',
-
-
+    'rest_framework_swagger',
 ]
 
 MIDDLEWARE = [
@@ -87,12 +86,12 @@ WSGI_APPLICATION = 'Notification.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    }
-}
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+#     }
+# }
 
 
 # Password validation

@@ -6,6 +6,9 @@ from Promo_code.models import PromoCode
 
 # Create your models here.
 class Notification(models.Model):
+    """
+    Stores Notification. related to :py:class:`User<User.models.User>`
+    """
     header = models.CharField(max_length=255)
     created_date = models.DateTimeField(auto_now_add=True)
     modified_date = models.DateTimeField(auto_now_add=True)
@@ -23,6 +26,11 @@ class Notification(models.Model):
 
 
 class NotificationTemplate(models.Model):
+    """
+    Stores NotificationTemplate. related to :py:class:`User<User.models.User>` & 
+    :py:class:`Language<Customer.models.Language>` and 
+    :py:class:`Notification<Push_notification.models.Notification>`
+    """
     notification_title = models.TextField()
     notification_body = models.TextField()
     created_date = models.DateTimeField(auto_now_add=True)
@@ -42,6 +50,10 @@ class NotificationTemplate(models.Model):
         db_table = 'notification_template'
 
 class CustomerNotification(models.Model):
+    """
+    Stores NotificationTemplate. related to :py:class:`Language<Customer.models.Language>` and 
+    :py:class:`NotificationTemplate<Push_notification.models.NotificationTemplate>`
+    """
     notification_template = models.ForeignKey(NotificationTemplate, on_delete=models.CASCADE)
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
     sent_date = models.DateTimeField(auto_now_add=True)
