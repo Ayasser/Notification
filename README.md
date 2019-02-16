@@ -1,5 +1,8 @@
 # Notification
 
+* Dynamic notifications and sms template.
+* User can create template and send it to user or group of users.
+
 
 
 ## Environment setup
