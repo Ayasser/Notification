@@ -137,7 +137,7 @@ DATABASES = {
         'NAME': 'swvl',
         'USER': 'root',
         'PASSWORD': 'password',
-        'HOST': 'localhost',   # Or an IP Address that your DB is hosted on
+        'HOST': 'db',   # if you use docker Or change to 'localhost' if u using venv
         'PORT': '3306',
     }
 }
