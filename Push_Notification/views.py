@@ -52,7 +52,7 @@ class CustomerNotificationViewSet(viewsets.ModelViewSet):
     serializer_class= CustomerNotificationSerializer
 
 @api_view(['GET'])
-def sendNotification(request):
+def send_notification(request):
     """
     | Send Notification using Firebase to one or group of customer.
 
@@ -62,27 +62,28 @@ def sendNotification(request):
         -promo_code_id : PromoCode
     """
     if request.method == 'GET':
+        
         customer_ids = request.query_params.get('customer_ids')
         if customer_ids:
             customer_ids = customer_ids.split(",")
+        
         notification_id = request.query_params.get('notification_id')
         promo_code_id = request.query_params.get('promo_code_id')
 
         if notification_id is None or customer_ids is None:
-            return Response("ERORR", status=status.HTTP_404_NOT_FOUND)
-        
+            return Response("Pleas Send notification_id and customer_ids ", status=status.HTTP_404_NOT_FOUND)
         notification = Notification.objects.filter(id=notification_id).first()
+        
         keys_dict = dict()
-
+        promo_code = None
         if promo_code_id:
             promo_code = PromoCode.objects.filter(id=promo_code_id).first()
             if promo_code:
                 keys_dict['[promo_code]'] = promo_code.code
         
         customers = Customer.objects.filter(id__in=customer_ids).order_by('language')
-        
         if not customers or not notification:
-            return Response("ERORR", status=status.HTTP_404_NOT_FOUND)
+            return Response("Cutomer or Notifiction not found", status=status.HTTP_404_NOT_FOUND)
         
         for customer in customers:
             notification_temp = NotificationTemplate.objects.filter(notification__id=notification.id,language__id=customer.language.id).first()
@@ -91,12 +92,12 @@ def sendNotification(request):
             keys_dict['[customer]'] = customer.first_name
             customer_device = CustomerDevices.objects.filter(customer__id=customer.id)\
                                 .order_by('-created_date').first()
+            
             for key in keys_dict:
                 body = body.replace(key,keys_dict[key])
                 title = title.replace(key,keys_dict[key])
                 
             registration_token= customer_device.device_id
-            
             message = messaging.Message(
                 notification=messaging.Notification(
                     title=title,
@@ -108,7 +109,11 @@ def sendNotification(request):
 
             # Call Message Service API IF send message sucessfully
             # Save sent message message
-            customer_notification = CustomerNotification(notification_template=notification_temp, customer=customer,
+            if promo_code:
+                customer_notification = CustomerNotification(promo_code=promo_code,notification_template=notification_temp, customer=customer,
+                                    notification_title=title, notification_body=body)
+            else:
+                customer_notification = CustomerNotification(notification_template=notification_temp, customer=customer,
                                     notification_title=title, notification_body=body)
             customer_notification.save()
                       

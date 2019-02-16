@@ -1,7 +1,7 @@
 from django.conf.urls import url, include
 from rest_framework.routers import SimpleRouter
 from .views import NotificationViewSet, NotificationTemplateViewSet, CustomerNotificationViewSet,\
-    sendNotification
+    send_notification
 router = SimpleRouter()
 
 router.register(r'notification', NotificationViewSet)
@@ -10,5 +10,5 @@ router.register(r'customernotification', CustomerNotificationViewSet)
 
 urlpatterns = [
     url('', include(router.urls)),
-    url(r'^sendnotification/', sendNotification),
+    url(r'^sendnotification/', send_notification),
 ]

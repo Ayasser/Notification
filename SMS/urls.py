@@ -1,7 +1,7 @@
 from django.conf.urls import url, include
 from rest_framework.routers import SimpleRouter
 from .views import SMSViewSet, SMSTemplateViewSet, CustomerSMSViewSet,\
-    sendSMS
+    send_sms
 router = SimpleRouter()
 
 router.register(r'sms', SMSViewSet)
@@ -10,5 +10,5 @@ router.register(r'customersms', CustomerSMSViewSet)
 
 urlpatterns = [
     url('', include(router.urls)),
-    url(r'^sendsms/', sendSMS),
+    url(r'^sendsms/', send_sms, name='sendsms'),
 ]
