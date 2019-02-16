@@ -87,34 +87,35 @@ def send_notification(request):
         
         for customer in customers:
             notification_temp = NotificationTemplate.objects.filter(notification__id=notification.id,language__id=customer.language.id).first()
-            body = notification_temp.notification_body
-            title = notification_temp.notification_title
-            keys_dict['[customer]'] = customer.first_name
-            customer_device = CustomerDevices.objects.filter(customer__id=customer.id)\
-                                .order_by('-created_date').first()
-            
-            for key in keys_dict:
-                body = body.replace(key,keys_dict[key])
-                title = title.replace(key,keys_dict[key])
+            if notification_temp:
+                body = notification_temp.notification_body
+                title = notification_temp.notification_title
+                keys_dict['[customer]'] = customer.first_name
+                customer_device = CustomerDevices.objects.filter(customer__id=customer.id)\
+                                    .order_by('-created_date').first()
                 
-            registration_token= customer_device.device_id
-            message = messaging.Message(
-                notification=messaging.Notification(
-                    title=title,
-                    body=body,
-                    ),
-                    token=registration_token,
-            )
-            firebase_response = messaging.send(message)
+                for key in keys_dict:
+                    body = body.replace(key,keys_dict[key])
+                    title = title.replace(key,keys_dict[key])
+                    
+                registration_token= customer_device.device_id
+                message = messaging.Message(
+                    notification=messaging.Notification(
+                        title=title,
+                        body=body,
+                        ),
+                        token=registration_token,
+                )
+                firebase_response = messaging.send(message)
 
-            # Call Message Service API IF send message sucessfully
-            # Save sent message message
-            if promo_code:
-                customer_notification = CustomerNotification(promo_code=promo_code,notification_template=notification_temp, customer=customer,
-                                    notification_title=title, notification_body=body)
-            else:
-                customer_notification = CustomerNotification(notification_template=notification_temp, customer=customer,
-                                    notification_title=title, notification_body=body)
-            customer_notification.save()
-                      
+                # Call Message Service API IF send message sucessfully
+                # Save sent message message
+                if promo_code:
+                    customer_notification = CustomerNotification(promo_code=promo_code,notification_template=notification_temp, customer=customer,
+                                        notification_title=title, notification_body=body)
+                else:
+                    customer_notification = CustomerNotification(notification_template=notification_temp, customer=customer,
+                                        notification_title=title, notification_body=body)
+                customer_notification.save()
+                        
     return Response("SMS sent.", status=status.HTTP_200_OK)

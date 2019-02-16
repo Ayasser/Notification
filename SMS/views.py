@@ -82,19 +82,20 @@ def send_sms(request):
         
         for customer in customers:
             sms_temp = SMSTemplate.objects.filter(sms__id=sms.id,language__id=customer.language.id).first()
-            message = sms_temp.message_template
-            keys_dict['[customer]'] = customer.first_name
-            
-            for key in keys_dict:
-                message = message.replace(key,keys_dict[key])
+            if sms_temp:
+                message = sms_temp.message_template
+                keys_dict['[customer]'] = customer.first_name
+                
+                for key in keys_dict:
+                    message = message.replace(key,keys_dict[key])
 
-            #Call Message Service API IF send message sucessfully
-            # Save sent message message
-            if promo_code:
-                customer_sms = CustomerSMS(sms_template=sms_temp,customer=customer,message=message,promo_code=promo_code)
-            else:
-                customer_sms = CustomerSMS(sms_template=sms_temp,customer=customer,message=message)
-            customer_sms.save()
+                #Call Message Service API IF send message sucessfully
+                # Save sent message message
+                if promo_code:
+                    customer_sms = CustomerSMS(sms_template=sms_temp,customer=customer,message=message,promo_code=promo_code)
+                else:
+                    customer_sms = CustomerSMS(sms_template=sms_temp,customer=customer,message=message)
+                customer_sms.save()
               
         
     return Response("SMS sent.", status=status.HTTP_200_OK)
