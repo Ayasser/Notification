@@ -33,7 +33,7 @@ def sendSMS(request):
             return Response("ERORR", status=status.HTTP_404_NOT_FOUND)
         
         for customer in customers:
-            sms_temp = SMSTemplate.objects.filter(sms=sms.id,language__id=customer.language.id).first()
+            sms_temp = SMSTemplate.objects.filter(sms__id=sms.id,language__id=customer.language.id).first()
             message = sms_temp.message_template
             keys_dict['[customer]'] = customer.first_name
             

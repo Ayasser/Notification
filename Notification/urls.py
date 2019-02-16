@@ -16,9 +16,11 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from SMS.views import sendSMS
+from Push_Notification.views import sendNotification
 from django.conf.urls import url
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     url(r'^sendsms/', sendSMS),
+    url(r'^sendnotification/', sendNotification),
 ]

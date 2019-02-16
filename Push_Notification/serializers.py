@@ -1,9 +1,9 @@
 from rest_framework import serializers
-from .models import SMS, SMSTemplate, CustomerSMS
+from .models import Notification, NotificationTemplate, CustomerNotification
 
-class SMSSerializer(serializers.ModelSerializer):
+class NotificationSerializer(serializers.ModelSerializer):
     class Meta:
-        model = SMS
+        model = Notification
         fields = [
             'header',
             'created_date',
@@ -13,30 +13,32 @@ class SMSSerializer(serializers.ModelSerializer):
         ]
         read_only_fields = ['id']
 
-class SMSTemplateSerializer(serializers.ModelSerializer):
+class NotificationTemplateSerializer(serializers.ModelSerializer):
     class Meta:
-        model = SMSTemplate
+        model = NotificationTemplate
         fields = [
-            'message_template',
+            'notification_title',
+            'notification_body', 
             'created_date',
             'modified_date',
             'created_by',
             'modified_by',
             'language',
-            'sms',
+            'notification',
             ]
         read_only_fields = ['id']
 
 
-class CustomerSMSSerializer(serializers.ModelSerializer):
+class CustomerNotificationSerializer(serializers.ModelSerializer):
     class Meta:
-        model = CustomerSMS
+        model = CustomerNotification
         fields = [
-            'sms_template',
+            'notification_template',
             'customer',
             'sent_date',
             'promo_code',
-            'message',
+            'notification_title',
+            'notification_body',
             ]
         read_only_fields = ['id']
 

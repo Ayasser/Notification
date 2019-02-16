@@ -14,3 +14,11 @@ Customer/__pycache__/
 Customer/migrations/__pycache__/
 
 SMS/migrations/__pycache__/
+
+Promo_code/__pycache__/
+
+Push_Notification/__pycache__/
+
+Push_Notification/migrations/__pycache__/
+
+Promo_code/migrations/__pycache__/
